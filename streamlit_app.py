@@ -1,7 +1,6 @@
 import streamlit as st
-import pandas as pd
 from PIL import Image
-
+from process_data import get_data
 
 favicon = Image.open("favicon.ico")
 st.set_page_config(
@@ -11,25 +10,18 @@ st.set_page_config(
     initial_sidebar_state="auto",
 )
 
-
-
-file_path = 'PUDAHUEL_TALLERES_DEPORTIVOS_PRIMAVERA_VERANO_2024.xlsx'
-data = pd.read_excel(file_path)
-
-
-data.columns = ['Taller', 'Dias', 'Horario', 'Ubicacion', 'Monitor']
-data = data.drop_duplicates().apply(lambda x: x.str.strip() if x.dtype == "object" else x)
-
+# Cargar los datos
+data = get_data()
 
 st.title("Talleres Deportivos Pudahuel - Primavera/Verano 2024")
 st.sidebar.header("Filtros de búsqueda")
 
-
+# Filtros en la barra lateral
 selected_dias = st.sidebar.multiselect("Selecciona días", options=data['Dias'].unique(), default=None)
 selected_taller = st.sidebar.text_input("Taller (ejemplo: 'Futbol')", value="", max_chars=50)
 
+# Filtrar datos basados en filtros de taller y días
 filtered_data = data.copy()
-
 if selected_dias:
     filtered_data = filtered_data[filtered_data['Dias'].isin(selected_dias)]
 
@@ -37,9 +29,9 @@ if selected_taller:
     filtered_data = filtered_data[filtered_data['Taller'].str.contains(selected_taller, case=False, na=False)]
 
 
-# Mostrar los resultados
-st.write(f"### Resultados: {len(filtered_data)} talleres encontrados")
-st.dataframe(filtered_data)
+columns_to_display = ['Taller', 'Dias', 'Horario', 'Ubicacion', 'Monitor']
+
+st.dataframe(filtered_data[columns_to_display])
 
 # Opción para descargar los resultados
 csv = filtered_data.to_csv(index=False)
