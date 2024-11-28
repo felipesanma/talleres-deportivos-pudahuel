@@ -1,0 +1,10 @@
+[tool.poetry]
+name = "pudeportes"
+version = "0.1.0"
+description = ""
+authors = []
+
+[tool.poetry.dependencies]
+python = "~3.13"
+streamlit = "~1.40.0"
+openpyxl = "^3.1.5"
