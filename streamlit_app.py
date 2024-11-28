@@ -1,5 +1,16 @@
 import streamlit as st
 import pandas as pd
+from PIL import Image
+
+
+favicon = Image.open("favicon.ico")
+st.set_page_config(
+    page_title="Talleres Deportivos Pudahuel 2024",
+    page_icon=favicon,
+    layout="wide",
+    initial_sidebar_state="auto",
+)
+
 
 
 file_path = 'PUDAHUEL_TALLERES_DEPORTIVOS_PRIMAVERA_VERANO_2024.xlsx'
