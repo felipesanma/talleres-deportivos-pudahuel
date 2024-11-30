@@ -1,3 +1,6 @@
 openpyxl==3.1.5
 pandas==2.2.3
 streamlit==1.40.2
+folium==0.18.0
+streamlit-folium==0.23.2
+geopy==2.4.1
